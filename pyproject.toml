@@ -24,18 +24,18 @@ build-backend = "setuptools.build_meta"
 
 # Project settings -----------------------------------------------------------------------------------------------------
 [project]
-name = "template"  # Required
+name = "Image Metric Calculator"  # Required
 dynamic = ["version"]
-description = "Ultralytics Template Python Package"  # Optional
+description = "Simple Streamlit UI that allows for a set of generated and ground truth images to be used for qualitative metric calculation (FID, IS, SSIM)"  # Optional
 readme = "README.md"  # Optional
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = { file = "LICENSE" }
-keywords = ["Ultralytics", "Template"]  # Optional
+keywords = ["mario-dg", "Research"]  # Optional
 authors = [
-    { name = "Glenn Jocher", email = "glenn.jocher@ultralytics.com" } # Optional
+    { name = "Mario da Graca", email = "mario.dagraca@gmx.de" } # Optional
 ]
 maintainers = [
-    { name = "Glenn Jocher", email = "glenn.jocher@ultralytics.com" } # Optional
+    { name = "Mario da Graca", email = "mario.dagraca@gmx.de" } # Optional
 ]
 classifiers = [# Optional, for a list of valid classifiers, see https://pypi.org/classifiers/
     "Development Status :: 4 - Beta",
@@ -44,9 +44,6 @@ classifiers = [# Optional, for a list of valid classifiers, see https://pypi.org
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Topic :: Software Development",
     "Topic :: Scientific/Engineering",
@@ -57,24 +54,27 @@ classifiers = [# Optional, for a list of valid classifiers, see https://pypi.org
 ]
 
 # Required dependencies ------------------------------------------------------------------------------------------------
-dependencies = [# Optional
-    "ultralytics",
-    "numpy",
+dependencies = [
 ]
 
 # Optional dependencies ------------------------------------------------------------------------------------------------
 [project.optional-dependencies] # Optional
 tests = ["pytest"]
 
-[project.urls]  # Optional
-"Bug Reports" = "https://github.com/ultralytics/template/issues"
-"Funding" = "https://ultralytics.com"
-"Source" = "https://github.com/ultralytics/template/"
-
-# [project.scripts]  # Optional
-# sample = "sample:main"  # executes the function `main` from this package when "sample" is called.
-
 # Tools settings -------------------------------------------------------------------------------------------------------
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
+numpy = "^1.26.4"
+pillow = "^10.2.0"
+scikit-image = "^0.22.0"
+scipy = "^1.12.0"
+torch = "^2.2.1"
+torchvision = "^0.17.1"
+streamlit = "^1.32.1"
+
 [tool.setuptools]  # configuration specific to the `setuptools` build backend.
 packages = { find = { where = ["."], include = ["template", "template.*"] } }
 package-data = { "sample" = ["*.yaml"] }
