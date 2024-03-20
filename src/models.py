@@ -2,7 +2,7 @@ import os
 import time
 
 
-MODEL_PATH = "src/models/"
+MODEL_PATH = "models/"
 
 def get_available_model_names() -> list[str]:
     files = os.listdir(MODEL_PATH)
