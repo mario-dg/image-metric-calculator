@@ -1,36 +1,37 @@
-from metrics import calculate_fid, calculate_is, calculate_ssim, calculate_ms_ssim, calculate_mifid
-
-import streamlit as st
 import numpy as np
-from PIL import Image
+import streamlit as st
 
-def calculate_metrics(real_images, generated_images):
-    # Calculate FID, IS, SSIM here using the code from your original script
-    # Return a dict with the metrics
-    return {'FID': calculate_fid(real_images, generated_images),
-            'MIFID': calculate_mifid(real_images, generated_images),
-            'IS': calculate_is(generated_images), 
-            'SSIM': calculate_ssim(real_images, generated_images),
-            'MS_SSIM': calculate_ms_ssim(real_images, generated_images)}
+from PIL import Image
+from metrics import calculate_metrics
+from models import get_available_model_names, run_inference
+
 
 st.set_page_config(layout="wide")
 st.title("Generated Image Comparison")
 
-col1, col2 = st.columns(2)  
+model_col1, model_col2 = st.columns(2)
+with model_col1:
+    available_models = get_available_model_names()
+    selected_model = st.selectbox("Select Model to Run Inference", available_models)
 
-with col1:
+with model_col2:
+    num_images = st.selectbox("Number of Images to Generate", [10, 20, 30, 50])
+
+upload_col1, upload_col2 = st.columns(2)  
+with upload_col1:
     st.header("Real Images")
-    real_images = st.file_uploader("Upload Real Images", accept_multiple_files=True)
+    real_images = st.file_uploader("Upload Real Images", accept_multiple_files=True, disabled=not selected_model)
     
     if real_images:
         real_image_list = [np.array(Image.open(img).resize((1024, 1024), Image.Resampling.BILINEAR), dtype=np.uint8) for img in real_images]
         st.image(real_image_list, width=150, caption=["Real" for _ in real_image_list])
 
-with col2:
+with upload_col2:
     st.header("Generated Images")
-    generated_images = st.file_uploader("Upload Generated Images", accept_multiple_files=True) 
+    if st.button("Generate Images", type="primary", disabled=not selected_model):
+        with st.spinner(f"Running inference using {selected_model} to generate {num_images} images..."):
+            generated_images = run_inference("test_model.safetensors", num_images)
 
-    if generated_images:
         generated_image_list = [np.array(Image.open(img).resize((1024, 1024), Image.Resampling.BILINEAR), dtype=np.uint8) for img in generated_images]  
         with st.spinner("Calculating Metrics..."):
             metrics_1 = calculate_metrics(real_image_list, generated_image_list)
