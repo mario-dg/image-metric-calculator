@@ -79,6 +79,7 @@ torch-fidelity = "^0.3.0"
 watchdog = "^4.0.0"
 datasets = "^2.18.0"
 diffusers = {extras = ["torch"], version = "^0.27.2"}
+jupyter = "^1.0.0"
 
 [tool.poetry.group.gpu]
 optional = true
