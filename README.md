@@ -31,6 +31,6 @@ For this paper 3 different Stable Diffusion architectures were trained:
 So make sure that these are available in the `models/` directory and are saved as `.safetensors`.
 
 The specific prompts and unique identifiers for each concept that these models were trained on are hardcoded and can/should not be changed, otherwise the results are unpredictable.
-The dataset is available on huggingface and will be downloaded on startup of the application.
+The dataset is available on [huggingface](https://huggingface.co/datasets/mario-dg/dreambooth-cell-images) and will be downloaded on startup of the application.
 
 450 subject class images were generated for each model architecture and concept. These are not necessary for the metric calculations, but are part of the training data that I published on huggingface.
