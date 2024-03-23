@@ -30,7 +30,7 @@ def load_dataset_from_hub():
         dataset = load_dataset("mario-dg/dreambooth-cell-images", split="train")
 
 
-def _get_data_by_class_name(class_name: str, num_images: int) -> tuple[list[Image], int]:
+def _get_images_by_class_name(class_name: str, num_images: int) -> tuple[list[Image], int]:
     class_images = [img["image"] for img in dataset if img["class_name"] == class_name]
     shuffle(class_images)
 
@@ -41,5 +41,5 @@ def _get_data_by_class_name(class_name: str, num_images: int) -> tuple[list[Imag
 
 def get_train_data(prompt: str, num_images: int) -> tuple[list[Image], int]:
     class_name = _get_class_name_from_prompt(prompt)
-    print(f"Retrieving data for class: {class_name}")
-    return _get_data_by_class_name(class_name, num_images)
+    print(f"Retrieving images for class: {class_name}")
+    return _get_images_by_class_name(class_name, num_images)
