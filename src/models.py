@@ -23,6 +23,7 @@ def run_inference(model_file: str, num_images: int, prompt: str, progress_bar: s
     model_data_dir = Path(f"{SAVE_PATH}\\{model_file_short}")
     model_data_dir.mkdir(parents=True, exist_ok=True)
     pipe = StableDiffusionPipeline.from_single_file(f"{MODEL_PATH}\\{model_file}", torch_dtype=torch.float16, use_safetensors=True)
+    pipe.enable_attention_slicing()
     pipe = pipe.to("cuda")
 
     for i in range(num_images):

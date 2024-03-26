@@ -88,6 +88,7 @@ optional = true
 [tool.poetry.group.gpu.dependencies]
 torch = {version = "^2.2.0+cu121", source = "pytorch"}
 torchvision = {version = "^0.17.0+cu121", source = "pytorch"}
+xformers = {version = "^0.0.25", source = "pytorch"}
 
 [[tool.poetry.source]]
 name = "pytorch"
