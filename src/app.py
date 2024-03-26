@@ -27,25 +27,21 @@ with model_col3:
 upload_col1, upload_col2 = st.columns(2)  
 with upload_col1:
     st.header("Real Images")
-    if not selected_model:
+    if selected_model:
         with st.spinner("Loading Real Images..."):
-            real_images, num_images = get_train_data(selected_prompt, num_images)
-            real_image_list = [np.array(img.resize((1024, 1024), Image.Resampling.BILINEAR), dtype=np.uint8) for img in real_images]
-            st.image(real_image_list, width=150)
+            real_image_list, num_images = get_train_data(selected_prompt, num_images)
+            st.image(real_image_list, width=256)
 
 with upload_col2:
     st.header("Generated Images")
     if st.button("Generate Images", type="primary"):
-        
-        progress_bar = st.progress(0, text="Generating Images...")
-        generated_images = run_inference(selected_model, num_images, selected_prompt, progress_bar)
-        progress_bar.empty()
+        generated_images = run_inference(selected_model, num_images, selected_prompt, None)
+        generated_image_list = [np.array(Image.open(img), dtype=np.uint8) for img in generated_images]  
 
-        generated_image_list = [np.array(Image.open(img).resize((1024, 1024), Image.Resampling.BILINEAR), dtype=np.uint8) for img in generated_images]  
         with st.spinner("Calculating Metrics..."):
-            metrics_1 = calculate_metrics(real_image_list, generated_image_list)
-        st.image(generated_image_list, width=150)
-        st.metric("FID", round(metrics_1['FID'], 4))
-        st.metric("IS Mean", round(metrics_1['IS'][0], 4)) 
-        st.metric("IS Std Dev", round(metrics_1['IS'][1], 4)) 
-        st.metric("SSIM", round(metrics_1['SSIM'], 4))
+            metrics = calculate_metrics(real_image_list, generated_image_list)
+            print(metrics)
+
+        st.metric("FID", round(metrics['FID'], 4))
+        st.metric("SSIM", round(metrics['SSIM'], 4))
+        st.image(generated_image_list, width=256)

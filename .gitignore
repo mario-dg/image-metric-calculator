@@ -5,6 +5,8 @@ __pycache__/
 
 data/**/
 models/**/
+models/*.safetensors
+models/*.yaml
 
 # C extensions
 *.so

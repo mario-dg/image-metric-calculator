@@ -80,6 +80,7 @@ watchdog = "^4.0.0"
 datasets = "^2.18.0"
 diffusers = {extras = ["torch"], version = "^0.27.2"}
 jupyter = "^1.0.0"
+transformers = "^4.39.1"
 
 [tool.poetry.group.gpu]
 optional = true

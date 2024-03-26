@@ -32,7 +32,7 @@ def calculate_is(generated_images):
 
 
 def calculate_ssim(real_images, generated_images):
-    ssim = StructuralSimilarityIndexMeasure(data_range=1.0).to(device)
+    ssim = StructuralSimilarityIndexMeasure().to(device)
     num_gen_images = len(generated_images)
     preds = torch.tensor(np.transpose(generated_images, (0, 3, 1, 2)), dtype=torch.float64, device=device)
     target = torch.tensor(np.transpose(real_images[:num_gen_images], (0, 3, 1, 2)), dtype=torch.float64, device=device)
@@ -41,10 +41,7 @@ def calculate_ssim(real_images, generated_images):
 
 
 def calculate_metrics(real_images, generated_images):
-    # Calculate FID, IS, SSIM here using the code from your original script
-    # Return a dict with the metrics
     return {'FID': calculate_fid(real_images, generated_images),
-            'IS': calculate_is(generated_images), 
             'SSIM': calculate_ssim(real_images, generated_images),
     }
 
